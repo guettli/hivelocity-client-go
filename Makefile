@@ -1,5 +1,5 @@
 VERSION=v$(shell date -u +"%Y.%m.%d").1
-GENERATOR_VERSION=4.3.1
+GENERATOR_VERSION=6.2.1
 
 .PHONY: client
 client:

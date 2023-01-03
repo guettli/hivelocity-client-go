@@ -1,49 +1,79 @@
 # \BandwidthApi
 
-All URIs are relative to *http://localhost/api/v2*
+All URIs are relative to *https://core.hivelocity.net/api/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**PostDeviceIdBandwidthImageResource**](BandwidthApi.md#PostDeviceIdBandwidthImageResource) | **Post** /bandwidth/device/{deviceId}/image | Returns RRDTool Graph based bandwidth in PNG format
-[**PostDeviceIdBandwidthResource**](BandwidthApi.md#PostDeviceIdBandwidthResource) | **Post** /bandwidth/device/{deviceId} | Returns RRDTool Xport based bandwidth data in JSON format
-[**PostServiceIdBandwidthImageResource**](BandwidthApi.md#PostServiceIdBandwidthImageResource) | **Post** /bandwidth/service/{serviceId}/image | Returns RRDTool Graph based bandwidth in PNG format
-[**PostServiceIdBandwidthResource**](BandwidthApi.md#PostServiceIdBandwidthResource) | **Post** /bandwidth/service/{serviceId} | Returns RRDTool Xport based bandwidth data in JSON format
+[**PostDeviceIdBandwidthImageResource**](BandwidthApi.md#PostDeviceIdBandwidthImageResource) | **Post** /bandwidth/device/{deviceId}/image | Get PNG by device
+[**PostDeviceIdBandwidthResource**](BandwidthApi.md#PostDeviceIdBandwidthResource) | **Post** /bandwidth/device/{deviceId} | Get data by device
+[**PostServiceIdBandwidthImageResource**](BandwidthApi.md#PostServiceIdBandwidthImageResource) | **Post** /bandwidth/service/{serviceId}/image | Get PNG by service
+[**PostServiceIdBandwidthResource**](BandwidthApi.md#PostServiceIdBandwidthResource) | **Post** /bandwidth/service/{serviceId} | Get data by service
 
 
 
 ## PostDeviceIdBandwidthImageResource
 
-> PostDeviceIdBandwidthImageResource(ctx, deviceId, period, interface_, optional)
+> []BandwidthImage PostDeviceIdBandwidthImageResource(ctx, deviceId).Period(period).Interface_(interface_).Start(start).End(end).XFields(xFields).Execute()
 
-Returns RRDTool Graph based bandwidth in PNG format
+Get PNG by device
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    deviceId := int32(56) // int32 | ID of Device to View
+    period := "period_example" // string | Return data in the given period. Day, week, month will return the previous day, week, month from now. (default to "day")
+    interface_ := "interface__example" // string | Network interface to get bandwidth usage from. eth0 and eth1 are your first and second nic respectively. If unsure use the public, private, and all values. Overages are billed on public traffic. (default to "eth0")
+    start := int32(56) // int32 | Start Time of Custom Time Period. (Unix Epoch Time) (optional) (default to 0)
+    end := int32(56) // int32 | End Time of Custom Time Period (Unix Epoch Time) (optional) (default to 1672750303)
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.BandwidthApi.PostDeviceIdBandwidthImageResource(context.Background(), deviceId).Period(period).Interface_(interface_).Start(start).End(end).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `BandwidthApi.PostDeviceIdBandwidthImageResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `PostDeviceIdBandwidthImageResource`: []BandwidthImage
+    fmt.Fprintf(os.Stdout, "Response from `BandwidthApi.PostDeviceIdBandwidthImageResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**deviceId** | **int32**| ID of Device to View | 
-**period** | **string**| Preconfigured Time Periods for Graph Data | [default to day]
-**interface_** | **string**| Network Interface to use for Graph Data | [default to eth0]
- **optional** | ***PostDeviceIdBandwidthImageResourceOpts** | optional parameters | nil if no parameters
+**deviceId** | **int32** | ID of Device to View | 
 
-### Optional Parameters
+### Other Parameters
 
-Optional parameters are passed through a pointer to a PostDeviceIdBandwidthImageResourceOpts struct
+Other parameters are passed through a pointer to a apiPostDeviceIdBandwidthImageResourceRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
-
-
- **start** | **optional.Int32**| Start Time of Custom Time Period. (Unix Epoch Time) | [default to 0]
- **end** | **optional.Int32**| End Time of Custom Time Period (Unix Epoch Time) | [default to 1599590085]
+ **period** | **string** | Return data in the given period. Day, week, month will return the previous day, week, month from now. | [default to &quot;day&quot;]
+ **interface_** | **string** | Network interface to get bandwidth usage from. eth0 and eth1 are your first and second nic respectively. If unsure use the public, private, and all values. Overages are billed on public traffic. | [default to &quot;eth0&quot;]
+ **start** | **int32** | Start Time of Custom Time Period. (Unix Epoch Time) | [default to 0]
+ **end** | **int32** | End Time of Custom Time Period (Unix Epoch Time) | [default to 1672750303]
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**[]BandwidthImage**](BandwidthImage.md)
 
 ### Authorization
 
@@ -52,7 +82,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -61,40 +91,71 @@ Name | Type | Description  | Notes
 
 ## PostDeviceIdBandwidthResource
 
-> PostDeviceIdBandwidthResource(ctx, deviceId, period, interface_, step, optional)
+> []Bandwidth PostDeviceIdBandwidthResource(ctx, deviceId).Period(period).Interface_(interface_).Step(step).Historical(historical).Start(start).End(end).XFields(xFields).Execute()
 
-Returns RRDTool Xport based bandwidth data in JSON format
+Get data by device
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    deviceId := int32(56) // int32 | ID of Device to View
+    period := "period_example" // string | Return data in the given period. Day, week, month will return the previous day, week, month from now. (default to "day")
+    interface_ := "interface__example" // string | Network interface to get bandwidth usage from. eth0 and eth1 are your first and second nic respectively. If unsure use the public, private, and all values. Overages are billed on public traffic. (default to "eth0")
+    step := int32(56) // int32 | Interval of data in seconds. Historical data is condensed, if provided value is smaller than existing steps for the date range the endpoint will return data with the smallest available step. (default to 300)
+    historical := true // bool | If you are a reseller, this will include historical interface data for device regardless of the current device owner. (optional) (default to false)
+    start := int32(56) // int32 | Start time of custom time period. (Unix Epoch Time) (optional) (default to 0)
+    end := int32(56) // int32 | End time of custom time period (Unix Epoch Time) (optional) (default to 1672750303)
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.BandwidthApi.PostDeviceIdBandwidthResource(context.Background(), deviceId).Period(period).Interface_(interface_).Step(step).Historical(historical).Start(start).End(end).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `BandwidthApi.PostDeviceIdBandwidthResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `PostDeviceIdBandwidthResource`: []Bandwidth
+    fmt.Fprintf(os.Stdout, "Response from `BandwidthApi.PostDeviceIdBandwidthResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**deviceId** | **int32**| ID of Device to View | 
-**period** | **string**| Preconfigured Time Periods for Graph Data | [default to day]
-**interface_** | **string**| Network Interface to use for Graph Data | [default to eth0]
-**step** | **int32**| Interval of Graph in Seconds | [default to 300]
- **optional** | ***PostDeviceIdBandwidthResourceOpts** | optional parameters | nil if no parameters
+**deviceId** | **int32** | ID of Device to View | 
 
-### Optional Parameters
+### Other Parameters
 
-Optional parameters are passed through a pointer to a PostDeviceIdBandwidthResourceOpts struct
+Other parameters are passed through a pointer to a apiPostDeviceIdBandwidthResourceRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
-
-
-
- **historical** | **optional.Bool**| Include Historical Interface Data for Device for Resellers | [default to false]
- **start** | **optional.Int32**| Start Time of Custom Time Period. (Unix Epoch Time) | [default to 0]
- **end** | **optional.Int32**| End Time of Custom Time Period (Unix Epoch Time) | [default to 1599590085]
+ **period** | **string** | Return data in the given period. Day, week, month will return the previous day, week, month from now. | [default to &quot;day&quot;]
+ **interface_** | **string** | Network interface to get bandwidth usage from. eth0 and eth1 are your first and second nic respectively. If unsure use the public, private, and all values. Overages are billed on public traffic. | [default to &quot;eth0&quot;]
+ **step** | **int32** | Interval of data in seconds. Historical data is condensed, if provided value is smaller than existing steps for the date range the endpoint will return data with the smallest available step. | [default to 300]
+ **historical** | **bool** | If you are a reseller, this will include historical interface data for device regardless of the current device owner. | [default to false]
+ **start** | **int32** | Start time of custom time period. (Unix Epoch Time) | [default to 0]
+ **end** | **int32** | End time of custom time period (Unix Epoch Time) | [default to 1672750303]
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**[]Bandwidth**](Bandwidth.md)
 
 ### Authorization
 
@@ -103,7 +164,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -112,37 +173,67 @@ Name | Type | Description  | Notes
 
 ## PostServiceIdBandwidthImageResource
 
-> PostServiceIdBandwidthImageResource(ctx, serviceId, period, interface_, optional)
+> []BandwidthImage PostServiceIdBandwidthImageResource(ctx, serviceId).Period(period).Interface_(interface_).Start(start).End(end).XFields(xFields).Execute()
 
-Returns RRDTool Graph based bandwidth in PNG format
+Get PNG by service
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    serviceId := int32(56) // int32 | ID of Service to View
+    period := "period_example" // string | Return data in the given period. Day, week, month will return the previous day, week, month from now. (default to "day")
+    interface_ := "interface__example" // string | Network interface to get bandwidth usage from. eth0 and eth1 are your first and second nic respectively. If unsure use the public, private, and all values. Overages are billed on public traffic. (default to "eth0")
+    start := int32(56) // int32 | Start Time of Custom Time Period. (Unix Epoch Time) (optional) (default to 0)
+    end := int32(56) // int32 | End Time of Custom Time Period (Unix Epoch Time) (optional) (default to 1672750303)
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.BandwidthApi.PostServiceIdBandwidthImageResource(context.Background(), serviceId).Period(period).Interface_(interface_).Start(start).End(end).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `BandwidthApi.PostServiceIdBandwidthImageResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `PostServiceIdBandwidthImageResource`: []BandwidthImage
+    fmt.Fprintf(os.Stdout, "Response from `BandwidthApi.PostServiceIdBandwidthImageResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**serviceId** | **int32**| ID of Service to View | 
-**period** | **string**| Preconfigured Time Periods for Graph Data | [default to day]
-**interface_** | **string**| Network Interface to use for Graph Data | [default to eth0]
- **optional** | ***PostServiceIdBandwidthImageResourceOpts** | optional parameters | nil if no parameters
+**serviceId** | **int32** | ID of Service to View | 
 
-### Optional Parameters
+### Other Parameters
 
-Optional parameters are passed through a pointer to a PostServiceIdBandwidthImageResourceOpts struct
+Other parameters are passed through a pointer to a apiPostServiceIdBandwidthImageResourceRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
-
-
- **start** | **optional.Int32**| Start Time of Custom Time Period. (Unix Epoch Time) | [default to 0]
- **end** | **optional.Int32**| End Time of Custom Time Period (Unix Epoch Time) | [default to 1599590085]
+ **period** | **string** | Return data in the given period. Day, week, month will return the previous day, week, month from now. | [default to &quot;day&quot;]
+ **interface_** | **string** | Network interface to get bandwidth usage from. eth0 and eth1 are your first and second nic respectively. If unsure use the public, private, and all values. Overages are billed on public traffic. | [default to &quot;eth0&quot;]
+ **start** | **int32** | Start Time of Custom Time Period. (Unix Epoch Time) | [default to 0]
+ **end** | **int32** | End Time of Custom Time Period (Unix Epoch Time) | [default to 1672750303]
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**[]BandwidthImage**](BandwidthImage.md)
 
 ### Authorization
 
@@ -151,7 +242,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -160,39 +251,69 @@ Name | Type | Description  | Notes
 
 ## PostServiceIdBandwidthResource
 
-> PostServiceIdBandwidthResource(ctx, serviceId, period, interface_, step, optional)
+> []Bandwidth PostServiceIdBandwidthResource(ctx, serviceId).Period(period).Interface_(interface_).Step(step).Start(start).End(end).XFields(xFields).Execute()
 
-Returns RRDTool Xport based bandwidth data in JSON format
+Get data by service
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    serviceId := int32(56) // int32 | ID of Service to View
+    period := "period_example" // string | Return data in the given period. Day, week, month will return the previous day, week, month from now. (default to "day")
+    interface_ := "interface__example" // string | Network interface to get bandwidth usage from. eth0 and eth1 are your first and second nic respectively. If unsure use the public, private, and all values. Overages are billed on public traffic. (default to "eth0")
+    step := int32(56) // int32 | Interval of data in seconds. Historical data is condensed, if provided value is smaller than existing steps for the date range the endpoint will return data with the smallest available step. (default to 300)
+    start := int32(56) // int32 | Start Time of Custom Time Period. (Unix Epoch Time) (optional) (default to 0)
+    end := int32(56) // int32 | End Time of Custom Time Period (Unix Epoch Time) (optional) (default to 1672750303)
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.BandwidthApi.PostServiceIdBandwidthResource(context.Background(), serviceId).Period(period).Interface_(interface_).Step(step).Start(start).End(end).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `BandwidthApi.PostServiceIdBandwidthResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `PostServiceIdBandwidthResource`: []Bandwidth
+    fmt.Fprintf(os.Stdout, "Response from `BandwidthApi.PostServiceIdBandwidthResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**serviceId** | **int32**| ID of Service to View | 
-**period** | **string**| Preconfigured Time Periods for Graph Data | [default to day]
-**interface_** | **string**| Network Interface to use for Graph Data | [default to eth0]
-**step** | **int32**| Interval of Graph in Seconds | [default to 300]
- **optional** | ***PostServiceIdBandwidthResourceOpts** | optional parameters | nil if no parameters
+**serviceId** | **int32** | ID of Service to View | 
 
-### Optional Parameters
+### Other Parameters
 
-Optional parameters are passed through a pointer to a PostServiceIdBandwidthResourceOpts struct
+Other parameters are passed through a pointer to a apiPostServiceIdBandwidthResourceRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
-
-
-
- **start** | **optional.Int32**| Start Time of Custom Time Period. (Unix Epoch Time) | [default to 0]
- **end** | **optional.Int32**| End Time of Custom Time Period (Unix Epoch Time) | [default to 1599590085]
+ **period** | **string** | Return data in the given period. Day, week, month will return the previous day, week, month from now. | [default to &quot;day&quot;]
+ **interface_** | **string** | Network interface to get bandwidth usage from. eth0 and eth1 are your first and second nic respectively. If unsure use the public, private, and all values. Overages are billed on public traffic. | [default to &quot;eth0&quot;]
+ **step** | **int32** | Interval of data in seconds. Historical data is condensed, if provided value is smaller than existing steps for the date range the endpoint will return data with the smallest available step. | [default to 300]
+ **start** | **int32** | Start Time of Custom Time Period. (Unix Epoch Time) | [default to 0]
+ **end** | **int32** | End Time of Custom Time Period (Unix Epoch Time) | [default to 1672750303]
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**[]Bandwidth**](Bandwidth.md)
 
 ### Authorization
 
@@ -201,7 +322,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

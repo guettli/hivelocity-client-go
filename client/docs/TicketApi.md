@@ -1,6 +1,6 @@
 # \TicketApi
 
-All URIs are relative to *http://localhost/api/v2*
+All URIs are relative to *https://core.hivelocity.net/api/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -16,21 +16,59 @@ Method | HTTP request | Description
 
 ## GetTicketIdResource
 
-> GetTicketIdResource(ctx, ticketId)
+> Ticket GetTicketIdResource(ctx, ticketId).XFields(xFields).Execute()
 
 Returns details of a specific ticket
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    ticketId := int32(56) // int32 | ticket database ID
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.TicketApi.GetTicketIdResource(context.Background(), ticketId).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `TicketApi.GetTicketIdResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetTicketIdResource`: Ticket
+    fmt.Fprintf(os.Stdout, "Response from `TicketApi.GetTicketIdResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**ticketId** | **int32**| ticket database ID | 
+**ticketId** | **int32** | ticket database ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetTicketIdResourceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**Ticket**](Ticket.md)
 
 ### Authorization
 
@@ -39,7 +77,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -48,21 +86,59 @@ Name | Type | Description  | Notes
 
 ## GetTicketReplyResource
 
-> GetTicketReplyResource(ctx, ticketId)
+> []TicketPost GetTicketReplyResource(ctx, ticketId).XFields(xFields).Execute()
 
 Returns a reply for a specific ticket
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    ticketId := int32(56) // int32 | ticket database ID
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.TicketApi.GetTicketReplyResource(context.Background(), ticketId).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `TicketApi.GetTicketReplyResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetTicketReplyResource`: []TicketPost
+    fmt.Fprintf(os.Stdout, "Response from `TicketApi.GetTicketReplyResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**ticketId** | **int32**| ticket database ID | 
+**ticketId** | **int32** | ticket database ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetTicketReplyResourceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**[]TicketPost**](TicketPost.md)
 
 ### Authorization
 
@@ -71,7 +147,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -80,17 +156,53 @@ Name | Type | Description  | Notes
 
 ## GetTicketResource
 
-> GetTicketResource(ctx, )
+> []Ticket GetTicketResource(ctx).XFields(xFields).Execute()
 
 Returns a list with all Tickets
 
-### Required Parameters
+### Example
 
-This endpoint does not need any parameter.
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.TicketApi.GetTicketResource(context.Background()).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `TicketApi.GetTicketResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetTicketResource`: []Ticket
+    fmt.Fprintf(os.Stdout, "Response from `TicketApi.GetTicketResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetTicketResourceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**[]Ticket**](Ticket.md)
 
 ### Authorization
 
@@ -99,7 +211,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -108,32 +220,59 @@ This endpoint does not need any parameter.
 
 ## GetTicketSearchResource
 
-> GetTicketSearchResource(ctx, optional)
+> TicketSeachResult GetTicketSearchResource(ctx).PerPage(perPage).Page(page).Q(q).XFields(xFields).Execute()
 
 Return results of ticket search
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    perPage := int32(56) // int32 | Number of items per page. (optional) (default to 10)
+    page := int32(56) // int32 | The page number of search. (optional) (default to 1)
+    q := "q_example" // string | Content search. (optional)
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.TicketApi.GetTicketSearchResource(context.Background()).PerPage(perPage).Page(page).Q(q).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `TicketApi.GetTicketSearchResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetTicketSearchResource`: TicketSeachResult
+    fmt.Fprintf(os.Stdout, "Response from `TicketApi.GetTicketSearchResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetTicketSearchResourceRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetTicketSearchResourceOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-
-Optional parameters are passed through a pointer to a GetTicketSearchResourceOpts struct
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **perPage** | **optional.Int32**| Number of items per page. | [default to 10]
- **page** | **optional.Int32**| The page number of search. | [default to 1]
- **q** | **optional.String**| Content search. | 
+ **perPage** | **int32** | Number of items per page. | [default to 10]
+ **page** | **int32** | The page number of search. | [default to 1]
+ **q** | **string** | Content search. | 
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**TicketSeachResult**](TicketSeachResult.md)
 
 ### Authorization
 
@@ -142,7 +281,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -151,22 +290,61 @@ Name | Type | Description  | Notes
 
 ## PostTicketReplyResource
 
-> PostTicketReplyResource(ctx, ticketId, payload)
+> TicketPost PostTicketReplyResource(ctx, ticketId).Payload(payload).XFields(xFields).Execute()
 
 Creates reply for a specific Ticket
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    ticketId := int32(56) // int32 | ticket database ID
+    payload := *openapiclient.NewTicketCreateReply("Body_example") // TicketCreateReply | 
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.TicketApi.PostTicketReplyResource(context.Background(), ticketId).Payload(payload).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `TicketApi.PostTicketReplyResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `PostTicketReplyResource`: TicketPost
+    fmt.Fprintf(os.Stdout, "Response from `TicketApi.PostTicketReplyResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**ticketId** | **int32**| ticket database ID | 
-**payload** | [**TicketCreateReply**](TicketCreateReply.md)|  | 
+**ticketId** | **int32** | ticket database ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPostTicketReplyResourceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **payload** | [**TicketCreateReply**](TicketCreateReply.md) |  | 
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**TicketPost**](TicketPost.md)
 
 ### Authorization
 
@@ -175,7 +353,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -184,21 +362,55 @@ Name | Type | Description  | Notes
 
 ## PostTicketResource
 
-> PostTicketResource(ctx, payload)
+> Ticket PostTicketResource(ctx).Payload(payload).XFields(xFields).Execute()
 
 Creates a new ticket
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    payload := *openapiclient.NewTicketCreate("Subject_example", "Queue_example") // TicketCreate | 
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.TicketApi.PostTicketResource(context.Background()).Payload(payload).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `TicketApi.PostTicketResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `PostTicketResource`: Ticket
+    fmt.Fprintf(os.Stdout, "Response from `TicketApi.PostTicketResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPostTicketResourceRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**payload** | [**TicketCreate**](TicketCreate.md)|  | 
+ **payload** | [**TicketCreate**](TicketCreate.md) |  | 
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**Ticket**](Ticket.md)
 
 ### Authorization
 
@@ -207,7 +419,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -216,22 +428,61 @@ Name | Type | Description  | Notes
 
 ## PutTicketIdResource
 
-> PutTicketIdResource(ctx, ticketId, payload)
+> Ticket PutTicketIdResource(ctx, ticketId).Payload(payload).XFields(xFields).Execute()
 
 Updates a specific ticket
 
-### Required Parameters
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    ticketId := int32(56) // int32 | ticket database ID
+    payload := *openapiclient.NewTicketPut() // TicketPut | 
+    xFields := "xFields_example" // string | An optional fields mask (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.TicketApi.PutTicketIdResource(context.Background(), ticketId).Payload(payload).XFields(xFields).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `TicketApi.PutTicketIdResource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `PutTicketIdResource`: Ticket
+    fmt.Fprintf(os.Stdout, "Response from `TicketApi.PutTicketIdResource`: %v\n", resp)
+}
+```
+
+### Path Parameters
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**ticketId** | **int32**| ticket database ID | 
-**payload** | [**TicketPut**](TicketPut.md)|  | 
+**ticketId** | **int32** | ticket database ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPutTicketIdResourceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **payload** | [**TicketPut**](TicketPut.md) |  | 
+ **xFields** | **string** | An optional fields mask | 
 
 ### Return type
 
- (empty response body)
+[**Ticket**](Ticket.md)
 
 ### Authorization
 
@@ -240,7 +491,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
